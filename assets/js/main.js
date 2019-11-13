@@ -7,6 +7,11 @@ let velocityX = 5 ;
 let velocityY = -5;
 let ballRadius = 20;
 
+const [brickHeight, brickWidth, brickPadding] = [10, 100, 5];
+
+let bricks = [];
+const rows = 3;
+
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
@@ -16,6 +21,8 @@ function init() {
 
     ballX = canvas.width/2;
     ballY = (canvas.height);
+
+    populateBricks();
 
     if (context){
         setInterval(drawLoop, 10);
@@ -59,4 +66,23 @@ function paintBall(x, y, radius, startAngle, endAngle, colour) {
 
     detectBoundaryX();
     detectBoundaryY();
+}
+
+function populateBricks(params) {
+    const amountOfBrick = calculateBricks();
+    for(let row = 0; row < rows; row++){
+        bricks[row] = [];
+        for(let col = 0; col < amountOfBrick; col++){
+            let brick = {x:0,
+                         y:0,
+                         colour: 'red'
+                        };
+                    bricks[row][col] = brick;
+        }
+    }
+    console.log(bricks);
+}
+
+function calculateBricks(params) {
+    return Math.floor(canvas.width / brickWidth + brickPadding);
 }
