@@ -32,7 +32,10 @@ function init() {
 
 function drawLoop() {
     context.clearRect(0,0,canvas.width, canvas.height);
-    paintBrick(50, 50, 100, 50, 'yellow');
+
+    let flattendArray = [].concat(...bricks);
+    flattendArray.forEach((brick) => {paintBrick(brick.x, brick.y, brickWidth, brickHeight, brick.colour)});
+
     paintBall(ballX, ballY - ballRadius, ballRadius, 0, Math.PI * 2, 'rgba(0, 255, 0, 0.5)');
 }
 
@@ -48,6 +51,7 @@ function detectBoundaryY() {
 }
 
 function paintBrick(x, y, width, height, colour) {
+    console.log(x,y);
     context.beginPath();
     context.fillStyle = colour;
     context.fillRect(x, y, width, height);
@@ -68,13 +72,13 @@ function paintBall(x, y, radius, startAngle, endAngle, colour) {
     detectBoundaryY();
 }
 
-function populateBricks(params) {
+function populateBricks() {
     const amountOfBrick = calculateBricks();
     for(let row = 0; row < rows; row++){
         bricks[row] = [];
         for(let col = 0; col < amountOfBrick; col++){
-            let brick = {x:0,
-                         y:0,
+            let brick = {x:col * (brickWidth + brickPadding),
+                         y:row * (brickHeight + brickPadding),
                          colour: 'red'
                         };
                     bricks[row][col] = brick;
@@ -83,6 +87,6 @@ function populateBricks(params) {
     console.log(bricks);
 }
 
-function calculateBricks(params) {
+function calculateBricks() {
     return Math.floor(canvas.width / brickWidth + brickPadding);
-}
+} 
