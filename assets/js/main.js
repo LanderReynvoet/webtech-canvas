@@ -1,19 +1,23 @@
 "use strict";
 
+let canvas, context 
+
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
     
-    let canvas = document.querySelector('#playfield');
-    let context = canvas.getContext('2d');
+    canvas = document.querySelector('#playfield');
+    context = canvas.getContext('2d');
 
-    context.fillStyle = 'blue';
+    if (context){
+        paintBrick(50, 50, 100, 50, 'blue')
+    }
 
-    context.fillRect(50, 50, 100, 50);
-
-    context.fillRect(150, 150, 100, 50);
-
-    context.fillRect = 'green'
-    
 }
 
+function paintBrick(x, y, width, height, colour) {
+    context.beginPath();
+    context.fillStyle = colour;
+    context.fillRect(x, y, width, height);
+    context.closePath();
+}
